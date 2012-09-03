@@ -183,27 +183,19 @@ function EDITOR:OnMousePressed(code)
 		if self:HasSelection() then
 			menu:AddOption("Cut", function()
 				if self:HasSelection() then
-					self.clipboard = self:GetSelection()
-					self.clipboard = string_gsub(self.clipboard, "\n", "\r\n")
-					SetClipboardText(self.clipboard)
+					SetClipboardText(string_gsub(self:GetSelection(), "\n", "\r\n"))
 					self:SetSelection()
 				end
 			end)
 			menu:AddOption("Copy", function()
 				if self:HasSelection() then
-					self.clipboard = self:GetSelection()
-					self.clipboard = string_gsub(self.clipboard, "\n", "\r\n")
-					SetClipboardText(self.clipboard)
+					SetClipboardText(string_gsub(self:GetSelection(), "\n", "\r\n"))
 				end
 			end)
 		end
 
 		menu:AddOption("Paste", function()
-			if self.clipboard then
-				self:SetSelection(self.clipboard)
-			else
-				self:SetSelection()
-			end
+			self.TextEntry:PostMessage("DoPaste", "", "")
 		end)
 
 		if self:HasSelection() then
@@ -301,7 +293,6 @@ function EDITOR:OnMousePressed(code)
 
 			str = str .. "[/color][/font][/code]"
 
-			self.clipboard = str
 			SetClipboardText( str )
 		end)
 
@@ -1832,16 +1823,12 @@ function EDITOR:_OnKeyCodeTyped(code)
 			self:DoRedo()
 		elseif code == KEY_X then
 			if self:HasSelection() then
-				self.clipboard = self:GetSelection()
-				self.clipboard = string_gsub(self.clipboard, "\n", "\r\n")
-				SetClipboardText(self.clipboard)
+				SetClipboardText(string_gsub(self:GetSelection(), "\n", "\r\n"))
 				self:SetSelection()
 			end
 		elseif code == KEY_C then
 			if self:HasSelection() then
-				self.clipboard = self:GetSelection()
-				self.clipboard = string_gsub(self.clipboard, "\n", "\r\n")
-				SetClipboardText(self.clipboard)
+				SetClipboardText(string_gsub(self:GetSelection(), "\n", "\r\n"))
 			end
 		-- pasting is now handled by the textbox that is used to capture input
 		--[[
