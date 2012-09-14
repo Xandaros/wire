@@ -819,8 +819,8 @@ function Compiler:InstrINCLU( args )
 	
 		include[2] = true -- Tempory value to prvent E2 compiling itself when itself. (INFINATE LOOOP!)
 		
-		local OldScopes = self:SaveScopes()
-		self:InitScope() -- Create a new Scope Enviroment
+		//local OldScopes = self:SaveScopes() -- Took out seperated scope enviroments.
+		//self:InitScope() -- Create a new Scope Enviroment
 		self:PushScope()
 
 		local root = include[1]
@@ -841,7 +841,7 @@ function Compiler:InstrINCLU( args )
 		include[2] = script
 		
 		self:PopScope()
-		self:LoadScopes(OldScopes) -- Reload the old enviroment
+		//self:LoadScopes(OldScopes) -- Reload the old enviroment
 	end
 	
 	

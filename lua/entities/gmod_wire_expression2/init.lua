@@ -303,7 +303,8 @@ function ENT:ResetContext()
 		prf = 0,
 		prfcount = 0,
 		prfbench = 0,
-		includes = self.includes
+		includes = self.includes,
+		IncludeLevel = 0
 	}
 
 	setmetatable(context,ScopeManager)

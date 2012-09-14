@@ -511,13 +511,32 @@ registerOperator("include", "", "", function(self, args)
 	if Include and Include[2] then
 		local Script = Include[2]
 		
-		local OldScopes = self:SaveScopes()
-		self:InitScope() -- Create a new Scope Enviroment
+		self.IncludeLevel = self.IncludeLevel + 1
+		self.IncludeFirst = !(Include[3] or false)
+		
+		//local OldScopes = self:SaveScopes() -- Took out seperated scope enviroments.
+		//self:InitScope() -- Create a new Scope Enviroment
 		self:PushScope()
 		
 		Script[1](self, Script)
+		Include[3] = true -- Tell 
 		
 		self:PopScope()
-		self:LoadScopes(OldScopes)
+		//self:LoadScopes(OldScopes)
+		
+		self.IncludeLevel = self.IncludeLevel - 1
+		self.IncludeFirst = nil
 	end
 end)
+
+e2function number isRoot()
+	return ((self.IncludeLevel == 0) and 1 or 0)
+end
+
+e2function number isInclude()
+	return ((self.IncludeLevel > 0) and 1 or 0)
+end
+
+e2function number isIncludeFirst()
+	return (self.IncludeFirst and 1 or 0)
+end
