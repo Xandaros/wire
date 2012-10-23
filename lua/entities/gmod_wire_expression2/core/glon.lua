@@ -3,7 +3,7 @@ if not glon then require("glon") end
 local last_glon_error = ""
 
 -- GLON output validation
-local DEFAULT = {n={},ntypes={},s={},stypes={},size=0,istable=true,depth=0}
+local DEFAULT = {n={},ntypes={},s={},stypes={},size=0,depth=0}
 
 --[[
 wire_expression2_glon = {}
@@ -92,7 +92,6 @@ typeSanitizers = {
 				safeGlonObjectMap["t"][glonOutputObject] = safeTable
 
 				if type(glonOutputObject) ~= "table" then return safeTable end
-				if not glonOutputObject.istable then return safeTable end
 
 				if type(glonOutputObject.s) == "table" and type(glonOutputObject.stypes) == "table" then
 					for k, v in pairs(glonOutputObject.s) do

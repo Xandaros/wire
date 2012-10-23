@@ -58,6 +58,17 @@ local function setOutput( self, args, Type )
 	end
 end
 
+--[[ Leaving this here, but commented out. It's not really a necessary feature.
+local function getOutput( self, args, default, Type )
+	local op1 = args[2]
+	local rv1 = op1[1](self,op1)
+	if (type(default) == "table") then default = table.Copy(default) end
+	if (self.entity.Outputs[rv1] and self.entity.Outputs[rv1].Type == Type) then
+		return self.GlobalScope[rv1] or default
+	end
+end
+]]
+
 local function getInput( self, args, default, Type )
 	local op1 = args[2]
 	local rv1 = op1[1](self,op1)
@@ -84,6 +95,7 @@ registerCallback("postinit",function()
 		if (!excluded_types[short]) then
 			registerFunction("ioSetOutput","s"..short,""..short,function(self,args) return setOutput(self,args,k) end)
 			registerFunction("ioGetInput"..upperfirst(k == "NORMAL" and "NUMBER" or k),"s",short,function(self,args) return getInput(self,args,v[2],k) end)
+			--registerFunction("ioGetOutput"..upperfirst(k == "NORMAL" and "NUMBER" or k),"s",short,function(self,args) return getOutput(self,args,v[2],k) end)
 		end
 	end
 end)
